@@ -25,9 +25,38 @@ const getAllFacility: RequestHandler = catchAsync(async (req, res, next) => {
         data: result,
       });
 })
-const getSingleFacility: RequestHandler = async (req, res, next) => {};
-const updateFacility: RequestHandler = async (req, res, next) => {};
-const deleteFacility: RequestHandler = async (req, res, next) => {};
+const getSingleFacility: RequestHandler = async (req, res, next) => {
+    const {id} = req.params
+    const result = await FacilityServices.getSingleFacilityFromDB(id)
+    sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: 'Facility is retrieved successfully',
+        data: result,
+      });
+};
+const updateFacility: RequestHandler = async (req, res, next) => {
+    const {id} = req.params
+    const {facility} = req.body 
+    const result = await FacilityServices.updateFacilityIntoDB(id, facility)
+    sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: 'Facility updated successfully',
+        data: result,
+      });
+};
+const deleteFacility: RequestHandler = async (req, res, next) => {
+    const {id } = req.params
+    const result = await FacilityServices.deleteFacilityFromDB(id)
+    sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: 'Facility deleted successfully',
+        data: result,
+      });
+
+};
 
 export const FacilityControllers = {
   createFacility,
