@@ -1,18 +1,19 @@
-import express, { Application, Request, Response } from 'express'
-import cors from 'cors'
-import router from './app/routes'
-const port = 3000
-const app:Application = express()
+import express, { Application, Request, Response } from 'express';
+import cors from 'cors';
+import router from './app/routes';
+import globalErrorHandler from './app/middlewares/globalErrorHandler';
+import notFound from './app/middlewares/notFound';
+const port = 3000;
+const app: Application = express();
 
 // parsers
-app.use(express.json())
-app.use(cors())
+app.use(express.json());
+app.use(cors());
 
-
-app.use('/api', router)
+app.use('/api', router);
 
 app.get('/', (req: Request, res: Response) => {
-    res.send(`
+  res.send(`
       <html>
         <head>
           <title>Sport Facility Booking Server</title>
@@ -38,8 +39,11 @@ app.get('/', (req: Request, res: Response) => {
         </body>
       </html>
     `);
-  });
-  
-  
+});
 
-export default app
+app.use(globalErrorHandler);
+
+// not found route error
+app.use(notFound)
+
+export default app;
