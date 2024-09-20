@@ -4,15 +4,13 @@ import { TFacility } from '../Facility/facility.interface';
 
 const bookingSchema = new Schema<TBooking>({
   date: {
-    type: Date,
+    type: String,
     required: true,
   },
-  startTime: { type: Date, required: true },
-  endTime: { type: Date, required: true },
+  startTime: { type: String, required: true },
+  endTime: { type: String, required: true },
   user: {
     type: Schema.Types.ObjectId,
-    required: [true, 'user id is required'],
-    unique: true,
     ref: 'User',
   },
   facility: {
@@ -22,7 +20,6 @@ const bookingSchema = new Schema<TBooking>({
   },
   payableAmount: {
     type: Number,
-    required: true,
   },
   isBooked: {
     type: String,
@@ -33,16 +30,28 @@ const bookingSchema = new Schema<TBooking>({
 
 bookingSchema.pre('save', async function (next) {
   const booking = this as TBooking;
+  
+  // Fetch facility to get pricePerHour
   const facility = await mongoose.model('Facility').findById(this.facility);
   if (!facility) {
     return next(new Error('Facility Not Found'));
   }
-  const hours =
-    (new Date(booking.endTime).getTime() -
-      new Date(booking.startTime).getTime()) /
-    (1000 * 60 * 60);
+
+  // Parse startTime and endTime in "HH:mm" format
+  const [startHours, startMinutes] = booking.startTime.split(':').map(Number);
+  const [endHours, endMinutes] = booking.endTime.split(':').map(Number);
+
+  // Calculate the duration in hours (as floating point number)
+  const hours = (endHours + endMinutes / 60) - (startHours + startMinutes / 60);
+  
+  if (hours <= 0) {
+    return next(new Error('Invalid time range'));
+  }
+
+  // Calculate the payableAmount based on facility's pricePerHour
   booking.payableAmount = hours * facility.pricePerHour;
+
   next();
 });
 
-export const Booking = model<TFacility>('Booking', bookingSchema);
+export const Booking = model<TBooking>('Booking', bookingSchema);
