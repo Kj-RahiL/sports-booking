@@ -19,12 +19,15 @@ const createBookingIntoDB = async (payload: TBooking, userId: string) => {
 };
 
 const getAllBookingFromDB = async () => {
-  const result = await Booking.find().populate('User').populate('facility');
+  const result = await Booking
+  .find()
+  .populate('user')
+  .populate('facility');
   return result;
 };
-const getSingleBookingFromDB = async (id: string) => {
-  const result = await Booking.findById(id);
-  return result;
+const getUserBookingFromDB = async (id: string) => {
+ const bookings = await Booking.find({ user: id }).populate('facility');
+  return bookings;
 };
 const updateBookingIntoDB = async (id: string, payload: Partial<TBooking>) => {
   const result = await Booking.findByIdAndUpdate(id, [{ $set: payload }], {
@@ -52,7 +55,7 @@ const deleteBookingFromDB = async (id: string) => {
 export const BookingServices = {
   createBookingIntoDB,
   getAllBookingFromDB,
-  getSingleBookingFromDB,
+  getUserBookingFromDB,
   updateBookingIntoDB,
   deleteBookingFromDB,
 };
