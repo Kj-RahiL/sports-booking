@@ -3,6 +3,7 @@ import httpStatus from 'http-status';
 import { TBooking } from './booking.interface';
 import { Booking } from './booking.model';
 import { Facility } from '../Facility/facility.model';
+import mongoose from 'mongoose';
 
 const createBookingIntoDB = async (payload: TBooking, userId: string) => {
   const facility = await Facility.findById(payload.facility);
@@ -19,43 +20,36 @@ const createBookingIntoDB = async (payload: TBooking, userId: string) => {
 };
 
 const getAllBookingFromDB = async () => {
-  const result = await Booking
-  .find()
-  .populate('user')
-  .populate('facility');
+  const result = await Booking.find().populate('user').populate('facility');
   return result;
 };
 const getUserBookingFromDB = async (id: string) => {
- const bookings = await Booking.find({ user: id }).populate('facility');
+  const bookings = await Booking.find({ user: id }).populate('facility');
   return bookings;
 };
-const updateBookingIntoDB = async (id: string, payload: Partial<TBooking>) => {
-  const result = await Booking.findByIdAndUpdate(id, [{ $set: payload }], {
-    new: true,
-  });
-  return result;
-};
-const deleteBookingFromDB = async (id: string) => {
-  const isStudentExist = await Booking.findById(id);
 
-  if (!isStudentExist) {
-    throw new AppError(httpStatus.NOT_FOUND, 'This student does not exist');
+const deleteBookingFromDB = async (id: string) => {
+  // check existing booking
+  const isBookingExist = await Booking.findById(id);
+  if (!isBookingExist) {
+    throw new AppError(httpStatus.NOT_FOUND, 'This booking does not exist');
   }
-  const deleteBooking = await Booking.findByIdAndUpdate(
+
+  const canceledBooking = await Booking.findByIdAndUpdate(
     id,
-    { isDeleted: true },
+    { isBooked: 'canceled' },
     { new: true },
-  );
-  if (!deleteBooking) {
-    throw new AppError(httpStatus.BAD_REQUEST, 'Failed to delete Student');
+  ).populate('facility');
+  if (!canceledBooking) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'Failed to canceled booking');
   }
-  return deleteBooking;
+
+  return canceledBooking;
 };
 
 export const BookingServices = {
   createBookingIntoDB,
   getAllBookingFromDB,
   getUserBookingFromDB,
-  updateBookingIntoDB,
   deleteBookingFromDB,
 };

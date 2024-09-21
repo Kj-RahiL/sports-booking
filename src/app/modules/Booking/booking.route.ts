@@ -17,10 +17,9 @@ router.post(
 router.get('/user', BookingControllers.getUserBooking);
 
 // only for admin update and delete
-router.patch('/:id', Auth(USER_Role.admin), BookingControllers.updateBooking);
-router.delete('/:id',  BookingControllers.deleteBooking);
+router.delete('/:id', Auth(USER_Role.user), BookingControllers.deleteBooking);
 
-// only for users
+// only for admin
 router.get('/',Auth(USER_Role.admin), BookingControllers.getAllBooking);
 
 export const BookingRoutes = router;

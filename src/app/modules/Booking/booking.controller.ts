@@ -88,24 +88,13 @@ const getUserBooking: RequestHandler = async (req, res, next) => {
     data: result,
   });
 };
-const updateBooking: RequestHandler = async (req, res, next) => {
-  const { id } = req.params;
-  const { facility } = req.body;
-  const result = await BookingServices.updateBookingIntoDB(id, facility);
-  sendResponse(res, {
-    statusCode: 200,
-    success: true,
-    message: 'Booking updated successfully',
-    data: result,
-  });
-};
 const deleteBooking: RequestHandler = async (req, res, next) => {
   const { id } = req.params;
   const result = await BookingServices.deleteBookingFromDB(id);
   sendResponse(res, {
     statusCode: 200,
     success: true,
-    message: 'Booking deleted successfully',
+    message: 'Booking canceled successfully',
     data: result,
   });
 };
@@ -114,6 +103,5 @@ export const BookingControllers = {
   createBooking,
   getAllBooking,
   getUserBooking,
-  updateBooking,
   deleteBooking,
 };
