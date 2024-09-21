@@ -18,7 +18,11 @@ router.get('/:id', FacilityControllers.getSingleFacility);
 
 // only for admin update and delete
 router.patch('/:id', Auth(USER_Role.admin), FacilityControllers.updateFacility);
-router.delete('/:id', Auth(USER_Role.admin), FacilityControllers.deleteFacility);
+router.delete(
+  '/:id',
+  Auth(USER_Role.admin),
+  FacilityControllers.deleteFacility,
+);
 router.get('/', FacilityControllers.getAllFacility);
 
 export const FacilityRoutes = router;

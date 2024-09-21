@@ -1,7 +1,7 @@
-import { Booking } from "../Booking/booking.model";
-import moment from 'moment'
+import { Booking } from '../Booking/booking.model';
+import moment from 'moment';
 
-export const checkAvailabilityService = async(date:any) => {
+export const checkAvailabilityService = async (date: any) => {
   const requestedDate = date ? moment(date as string, 'YYYY-MM-DD') : moment();
 
   // 2. Retrieve bookings for the specified date from the database
@@ -31,5 +31,5 @@ export const checkAvailabilityService = async(date:any) => {
     });
   });
 
-  return availableSlots
+  return availableSlots;
 };

@@ -60,26 +60,26 @@ const getAllBooking: RequestHandler = catchAsync(async (req, res, next) => {
 });
 
 const getUserBooking: RequestHandler = async (req, res, next) => {
-    const token = req.headers.authorization?.split(' ')[1];
-    // checking token
-    if (!token) {
-      throw new AppError(httpStatus.UNAUTHORIZED, "You're not Authorized");
-    }
-  
-    // checking if the valid token
-    const decoded = jwt.verify(
-      token,
-      config.jwt_access_secret as string,
-    ) as JwtPayload;
-    const { role, email } = decoded;
-  
-    if (role !== USER_Role.user) {
-      throw new AppError(httpStatus.UNAUTHORIZED, 'Only user can booked');
-    }
-    const user = await User.findOne({ email });
-    if (!user) {
-      throw new AppError(httpStatus.NOT_FOUND, 'user not found');
-    }
+  const token = req.headers.authorization?.split(' ')[1];
+  // checking token
+  if (!token) {
+    throw new AppError(httpStatus.UNAUTHORIZED, "You're not Authorized");
+  }
+
+  // checking if the valid token
+  const decoded = jwt.verify(
+    token,
+    config.jwt_access_secret as string,
+  ) as JwtPayload;
+  const { role, email } = decoded;
+
+  if (role !== USER_Role.user) {
+    throw new AppError(httpStatus.UNAUTHORIZED, 'Only user can booked');
+  }
+  const user = await User.findOne({ email });
+  if (!user) {
+    throw new AppError(httpStatus.NOT_FOUND, 'user not found');
+  }
   const result = await BookingServices.getUserBookingFromDB(user.id);
   sendResponse(res, {
     statusCode: 200,

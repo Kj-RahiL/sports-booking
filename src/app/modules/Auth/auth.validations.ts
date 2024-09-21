@@ -9,15 +9,15 @@ const loginValidationSchema = z.object({
 });
 
 const userValidationSchema = z.object({
-   body:z.object({
+  body: z.object({
     name: z.string(),
     email: z.string().email(),
     password: z.string(),
     phone: z.string(),
     role: z.nativeEnum(USER_Role),
     address: z.string(),
-   })
-  })
+  }),
+});
 
 export const AuthValidation = {
   loginValidationSchema,

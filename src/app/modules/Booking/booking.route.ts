@@ -20,6 +20,6 @@ router.get('/user', BookingControllers.getUserBooking);
 router.delete('/:id', Auth(USER_Role.user), BookingControllers.deleteBooking);
 
 // only for admin
-router.get('/',Auth(USER_Role.admin), BookingControllers.getAllBooking);
+router.get('/', Auth(USER_Role.admin), BookingControllers.getAllBooking);
 
 export const BookingRoutes = router;

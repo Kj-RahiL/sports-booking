@@ -47,8 +47,7 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
         message: err?.message,
       },
     ];
-  }
-   else if (err instanceof Error) {
+  } else if (err instanceof Error) {
     message = err.message;
     errorMessage = [
       {
@@ -61,9 +60,8 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
     success: false,
     message,
     errorMessage,
-    stack:config.NODE_ENV === 'development' ? err.stack : null
-  })
-
+    stack: config.NODE_ENV === 'development' ? err.stack : null,
+  });
 };
 
 export default globalErrorHandler;

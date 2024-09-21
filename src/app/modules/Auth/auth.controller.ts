@@ -16,8 +16,8 @@ const signup = catchAsync(async (req, res) => {
   });
 });
 const login = catchAsync(async (req, res) => {
-  const {accessToken, refreshToken} = await AuthServices.login(req.body);
-  
+  const { accessToken, refreshToken } = await AuthServices.login(req.body);
+
   const user = await User.findOne({ email: req.body.email });
 
   res.cookie('refreshToken', refreshToken, {

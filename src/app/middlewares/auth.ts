@@ -9,7 +9,6 @@ import { NextFunction, Request, Response } from 'express';
 
 const Auth = (...requiredRoles: (keyof typeof USER_Role)[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-
     const token = req.headers.authorization?.split(' ')[1];
 
     // console.log('to tok token',token);

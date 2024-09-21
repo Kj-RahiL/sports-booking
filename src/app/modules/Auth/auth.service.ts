@@ -53,7 +53,7 @@ const login = async (payload: TLoginUser) => {
     { expiresIn: config.jwt_refresh_expire_in },
   );
   return {
-    accessToken:`Bearer ${accessToken}`,
+    accessToken: `Bearer ${accessToken}`,
     refreshToken,
   };
 };

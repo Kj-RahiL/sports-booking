@@ -1,9 +1,7 @@
-import { Router } from "express";
-import { checkAvailabilityController } from "./checkAvailability.controller";
+import { Router } from 'express';
+import { checkAvailabilityController } from './checkAvailability.controller';
 
+const router = Router();
+router.get('/check-availability', checkAvailabilityController);
 
-const router = Router()
-router.get('/check-availability',checkAvailabilityController )
-
-
-export const checkAvailabilityRoutes = router
+export const checkAvailabilityRoutes = router;

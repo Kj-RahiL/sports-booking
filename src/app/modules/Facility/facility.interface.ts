@@ -1,13 +1,12 @@
-import { Model } from "mongoose";
-
+import { Model } from 'mongoose';
 
 export type TFacility = {
-    name: string;
-    description: string;
-    pricePerHour: number;
-    location: string;
-    isDeleted:boolean;
-}
+  name: string;
+  description: string;
+  pricePerHour: number;
+  location: string;
+  isDeleted: boolean;
+};
 
 // export interface FacilityModel extends Model<TFacility> {
 //     isUserExists(id: string): Promise<TFacility | null>;

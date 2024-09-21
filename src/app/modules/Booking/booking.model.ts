@@ -30,7 +30,7 @@ const bookingSchema = new Schema<TBooking>({
 
 bookingSchema.pre('save', async function (next) {
   const booking = this as TBooking;
-  
+
   // Fetch facility to get pricePerHour
   const facility = await mongoose.model('Facility').findById(this.facility);
   if (!facility) {
@@ -42,8 +42,8 @@ bookingSchema.pre('save', async function (next) {
   const [endHours, endMinutes] = booking.endTime.split(':').map(Number);
 
   // Calculate the duration in hours (as floating point number)
-  const hours = (endHours + endMinutes / 60) - (startHours + startMinutes / 60);
-  
+  const hours = endHours + endMinutes / 60 - (startHours + startMinutes / 60);
+
   if (hours <= 0) {
     return next(new Error('Invalid time range'));
   }

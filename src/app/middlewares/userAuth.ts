@@ -40,7 +40,6 @@ const userAuthMiddleware = async (
     }
 
     // Attach user to request object for further use
-    req.user = user;
 
     // Proceed to the next middleware or controller
     next();
