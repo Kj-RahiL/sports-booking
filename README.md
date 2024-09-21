@@ -54,7 +54,7 @@ This project was inspired by a sports lover named Alex, who wanted to simplify t
     ```
 5. Start the server:
     ```
-    npm run dev
+    npm run start:dev
     ```
 ## API Endpoints
 **User Routes**
