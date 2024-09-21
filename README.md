@@ -31,7 +31,7 @@ This project was inspired by a sports lover named Alex, who wanted to simplify t
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/sports-facility-booking.git
+   git clone https://github.com/Kj-RahiL/sports-booking.git
 
     ```
 2. Navigate to the project directory:
