@@ -37,7 +37,6 @@ const getAllBooking: RequestHandler = catchAsync(async (req, res, next) => {
 });
 
 const getUserBooking: RequestHandler = async (req, res, next) => {
-
   const token = req.headers.authorization?.split(' ')[1];
 
   const result = await BookingServices.getUserBookingFromDB(token!);

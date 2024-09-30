@@ -18,7 +18,7 @@ const signup = async (payload: TUser) => {
 
   // set role user
 
-  payload.role = USER_Role.user 
+  payload.role = USER_Role.user;
 
   const newUser = await User.create(payload);
   return newUser;

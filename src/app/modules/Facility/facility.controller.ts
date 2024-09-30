@@ -7,7 +7,6 @@ import catchAsync from '../../utils/catchAsync';
 import httpStatus from 'http-status';
 
 const createFacility: RequestHandler = catchAsync(async (req, res, next) => {
-
   const result = await FacilityServices.createFacilityIntoDB(req.body);
 
   sendResponse(res, {

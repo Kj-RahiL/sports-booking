@@ -1,4 +1,3 @@
-
 import { USER_Role } from './user.constant';
 import { TUser } from './user.interface';
 import { User } from './user.model';
@@ -9,7 +8,7 @@ const createAdminIntoDB = async (payload: TUser) => {
   payload.role = USER_Role.admin;
   if (user) {
     const admin = await User.findByIdAndUpdate(user._id, payload);
-    return admin
+    return admin;
   }
 
   const admin = await User.create(payload);

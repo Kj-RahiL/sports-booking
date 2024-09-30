@@ -7,7 +7,7 @@ const confirmationController = catchAsync(async (req, res) => {
     transactionId as string,
     paymentStatus as string,
   );
- res.send(result)
+  res.send(result);
 });
 
 export const PaymentController = {

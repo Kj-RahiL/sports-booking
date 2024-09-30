@@ -5,10 +5,9 @@ import AppError from '../../errors/appError';
 import httpStatus from 'http-status';
 
 export const checkAvailabilityService = async (date: any, id: string) => {
-
-  const facility = await Facility.findById(id)
-  if(!facility){
-    throw new AppError(httpStatus.NOT_FOUND, 'This Facility does not exist')
+  const facility = await Facility.findById(id);
+  if (!facility) {
+    throw new AppError(httpStatus.NOT_FOUND, 'This Facility does not exist');
   }
 
   const requestedDate = date ? moment(date as string, 'YYYY-MM-DD') : moment();
@@ -16,7 +15,7 @@ export const checkAvailabilityService = async (date: any, id: string) => {
   //  Retrieve bookings for the specified date from the database
   const bookings = await Booking.find({
     date: requestedDate.format('YYYY-MM-DD'),
-    facility:id
+    facility: id,
   });
 
   //  Define total available time slots for the day (e.g., 08:00 to 20:00)

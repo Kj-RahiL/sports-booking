@@ -4,7 +4,7 @@ import { checkAvailabilityService } from './checkAvailabity.service';
 
 export const checkAvailabilityController = catchAsync(
   async (req, res, next) => {
-    const {date, facility} = req.query
+    const { date, facility } = req.query;
     const result = await checkAvailabilityService(date, facility);
     sendResponse(res, {
       statusCode: 200,

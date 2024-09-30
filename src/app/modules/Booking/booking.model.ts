@@ -28,7 +28,7 @@ const bookingSchema = new Schema<TBooking>({
   },
   paymentStatus: {
     type: String,
-    enum: ['pending' , 'paid' , 'canceled'],
+    enum: ['pending', 'paid', 'canceled'],
     default: 'pending',
   },
   transactionId: {

@@ -24,4 +24,4 @@ router.patch(
 //getAll
 router.get('/', userControllers.getAllUser);
 
-export const UserRoutes = router
+export const UserRoutes = router;

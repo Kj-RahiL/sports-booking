@@ -4,8 +4,6 @@ import { TPayment } from './payment.interface';
 import AppError from '../../errors/appError';
 import httpStatus from 'http-status';
 
-
-
 export const initialPayment = async (paymentData: TPayment) => {
   const res = await axios.post(config.payment_url!, {
     store_id: config.store_id,
@@ -29,22 +27,21 @@ export const initialPayment = async (paymentData: TPayment) => {
     type: 'json',
   });
 
-  return res.data
+  return res.data;
 };
 
-
-export const verifyPayment = async(tnxId: string)=>{
-    try {
-        const res = await axios.get(config.payment_verify_url!, {
-            params: {
-                store_id: config.store_id,
-                signature_key: config.signature_key,
-                type: 'json',
-                request_id: tnxId  
-            }
-        })
-        return res
-    } catch (error) {
-        throw new AppError(httpStatus.FORBIDDEN,'payment validation failed')
-    }
-}
+export const verifyPayment = async (tnxId: string) => {
+  try {
+    const res = await axios.get(config.payment_verify_url!, {
+      params: {
+        store_id: config.store_id,
+        signature_key: config.signature_key,
+        type: 'json',
+        request_id: tnxId,
+      },
+    });
+    return res;
+  } catch (error) {
+    throw new AppError(httpStatus.FORBIDDEN, 'payment validation failed');
+  }
+};

@@ -18,7 +18,7 @@ const createBookingIntoDB = async (payload: TBooking, token: string) => {
     ...payload,
     user: userData.id,
     isBooked: 'confirmed',
-    transactionId
+    transactionId,
   });
   const paymentData = {
     transactionId,
