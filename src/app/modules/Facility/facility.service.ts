@@ -26,10 +26,10 @@ const updateFacilityIntoDB = async (
   return result;
 };
 const deleteFacilityFromDB = async (id: string) => {
-  const isStudentExist = await Facility.findById(id);
+  const isFacilityExist = await Facility.findById(id);
 
-  if (!isStudentExist) {
-    throw new AppError(httpStatus.NOT_FOUND, 'This student does not exist');
+  if (!isFacilityExist) {
+    throw new AppError(httpStatus.NOT_FOUND, 'This facility does not exist');
   }
   const deleteFacility = await Facility.findByIdAndUpdate(
     id,

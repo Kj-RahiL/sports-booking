@@ -16,7 +16,7 @@ router.post(
 );
 router.get('/user', BookingControllers.getUserBooking);
 
-// only for admin update and delete
+// only for user
 router.delete('/:id', Auth(USER_Role.user), BookingControllers.deleteBooking);
 
 // only for admin

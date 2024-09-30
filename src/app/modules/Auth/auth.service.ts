@@ -18,7 +18,7 @@ const signup = async (payload: TUser) => {
 
   // set role user
 
-  // payload.role = USER_Role.user //when api call create-admin using for this code
+  payload.role = USER_Role.user 
 
   const newUser = await User.create(payload);
   return newUser;

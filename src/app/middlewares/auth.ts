@@ -11,10 +11,9 @@ const Auth = (...requiredRoles: (keyof typeof USER_Role)[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const token = req.headers.authorization?.split(' ')[1];
 
-    // console.log('to tok token',token);
     // checking token
     if (!token) {
-      throw new AppError(httpStatus.UNAUTHORIZED, "You're not Authorized");
+      throw new AppError(httpStatus.UNAUTHORIZED, "You're not Authorized t");
     }
 
     // checking if the valid token

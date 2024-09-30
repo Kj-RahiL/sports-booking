@@ -1,6 +1,5 @@
-import httpStatus from 'http-status';
+
 import config from '../../config';
-import AppError from '../../errors/appError';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import { User } from '../User/user.model';

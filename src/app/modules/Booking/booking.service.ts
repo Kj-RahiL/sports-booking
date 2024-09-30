@@ -3,28 +3,46 @@ import httpStatus from 'http-status';
 import { TBooking } from './booking.interface';
 import { Booking } from './booking.model';
 import { Facility } from '../Facility/facility.model';
-import mongoose from 'mongoose';
+import { getUser } from '../../utils/getUser';
+import { initialPayment } from '../payment/payment.utils';
 
-const createBookingIntoDB = async (payload: TBooking, userId: string) => {
+const createBookingIntoDB = async (payload: TBooking, token: string) => {
+  const userData = await getUser(token);
   const facility = await Facility.findById(payload.facility);
   if (!facility) {
     throw new AppError(httpStatus.NOT_FOUND, 'Facility is not found');
   }
+  const transactionId = `TXN-${Date.now()}`;
 
-  const result = await Booking.create({
+  const booking = await Booking.create({
     ...payload,
-    user: userId,
+    user: userData.id,
     isBooked: 'confirmed',
+    transactionId
   });
-  return result;
+  const paymentData = {
+    transactionId,
+    totalPrice: booking.payableAmount,
+    customerName: userData.name,
+    customerEmail: userData.email,
+    customerPhone: userData.phone,
+    customerAddress: userData.address,
+  };
+  const paymentSession = await initialPayment(paymentData);
+
+  return paymentSession;
 };
 
 const getAllBookingFromDB = async () => {
   const result = await Booking.find().populate('user').populate('facility');
   return result;
 };
-const getUserBookingFromDB = async (id: string) => {
-  const bookings = await Booking.find({ user: id }).populate('facility');
+const getUserBookingFromDB = async (token: string) => {
+  const userData = await getUser(token);
+  const bookings = await Booking.find({ user: userData.id }).populate(
+    'facility',
+  );
+
   return bookings;
 };
 

@@ -11,9 +11,17 @@ router.post(
   userControllers.createAdmin,
 );
 
+//get
+router.get('/:email', userControllers.getUser);
+
 //update
-router.put(
+router.patch(
   '/:id',
   validateRequest(UserValidations.updateUserValidationSchema),
   userControllers.updateUser,
 );
+
+//getAll
+router.get('/', userControllers.getAllUser);
+
+export const UserRoutes = router

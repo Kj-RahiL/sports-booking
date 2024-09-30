@@ -3,9 +3,9 @@ import cors from 'cors';
 import router from './app/routes';
 import globalErrorHandler from './app/middlewares/globalErrorHandler';
 import notFound from './app/middlewares/notFound';
-import { BookingRoutes } from './app/modules/Booking/booking.route';
 import { checkAvailabilityRoutes } from './app/modules/checkAvaility/checkAbailabity.route';
-const port = 3000;
+import { paymentRoutes } from './app/modules/payment/payment.routes';
+
 const app: Application = express();
 
 // parsers
@@ -14,6 +14,7 @@ app.use(cors());
 
 app.use('/api', router);
 app.use('/api', checkAvailabilityRoutes);
+app.use('/api', paymentRoutes);
 
 app.get('/', (req: Request, res: Response) => {
   res.send(`

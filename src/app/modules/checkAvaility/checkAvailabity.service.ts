@@ -1,15 +1,25 @@
 import { Booking } from '../Booking/booking.model';
 import moment from 'moment';
+import { Facility } from '../Facility/facility.model';
+import AppError from '../../errors/appError';
+import httpStatus from 'http-status';
 
-export const checkAvailabilityService = async (date: any) => {
+export const checkAvailabilityService = async (date: any, id: string) => {
+
+  const facility = await Facility.findById(id)
+  if(!facility){
+    throw new AppError(httpStatus.NOT_FOUND, 'This Facility does not exist')
+  }
+
   const requestedDate = date ? moment(date as string, 'YYYY-MM-DD') : moment();
 
-  // 2. Retrieve bookings for the specified date from the database
+  //  Retrieve bookings for the specified date from the database
   const bookings = await Booking.find({
     date: requestedDate.format('YYYY-MM-DD'),
+    facility:id
   });
 
-  // 3. Define total available time slots for the day (e.g., 08:00 to 20:00)
+  //  Define total available time slots for the day (e.g., 08:00 to 20:00)
   const fullDaySlots = [
     { startTime: '08:00', endTime: '10:00' },
     { startTime: '10:00', endTime: '12:00' },

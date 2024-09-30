@@ -26,6 +26,14 @@ const bookingSchema = new Schema<TBooking>({
     enum: ['confirmed', 'unconfirmed', 'canceled'],
     default: 'unconfirmed',
   },
+  paymentStatus: {
+    type: String,
+    enum: ['pending' , 'paid' , 'canceled'],
+    default: 'pending',
+  },
+  transactionId: {
+    type: String,
+  },
 });
 
 bookingSchema.pre('save', async function (next) {

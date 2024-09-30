@@ -14,7 +14,6 @@ const userValidationSchema = z.object({
     email: z.string().email(),
     password: z.string(),
     phone: z.string(),
-    role: z.nativeEnum(USER_Role),
     address: z.string(),
   }),
 });

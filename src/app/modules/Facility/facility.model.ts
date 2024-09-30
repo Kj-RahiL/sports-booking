@@ -3,6 +3,7 @@ import { TFacility } from './facility.interface';
 
 const facilitySchema = new Schema<TFacility>({
   name: { type: String, required: [true, 'Facility name is required'] },
+  image: { type: String, required: [true, 'Image is required'] },
   description: { type: String, required: [true, 'Description is required'] },
   pricePerHour: {
     type: Number,
